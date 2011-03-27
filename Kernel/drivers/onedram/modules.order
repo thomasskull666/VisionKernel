@@ -1,0 +1,2 @@
+kernel/drivers/onedram/victory/dpram.ko
+kernel/drivers/onedram/dpram_recovery/dpram_recovery.ko

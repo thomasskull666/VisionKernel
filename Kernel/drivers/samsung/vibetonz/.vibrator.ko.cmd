@@ -1,0 +1,1 @@
+cmd_drivers/samsung/vibetonz/vibrator.ko := /home/thomas/test/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL -r  -T /home/thomas/work/tanimn/Twilight_Zone_Kernel/Kernel/scripts/module-common.lds --build-id -o drivers/samsung/vibetonz/vibrator.ko drivers/samsung/vibetonz/vibrator.o drivers/samsung/vibetonz/vibrator.mod.o

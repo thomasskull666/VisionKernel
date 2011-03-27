@@ -1,0 +1,3 @@
+kernel/drivers/onedram_svn/victory/modemctl/modemctl.ko
+kernel/drivers/onedram_svn/victory/onedram/onedram.ko
+kernel/drivers/onedram_svn/victory/svnet/svnet.ko

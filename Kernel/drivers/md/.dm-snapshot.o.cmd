@@ -1,0 +1,1 @@
+cmd_drivers/md/dm-snapshot.o := /home/thomas/test/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL    -r -o drivers/md/dm-snapshot.o drivers/md/dm-snap.o drivers/md/dm-exception-store.o drivers/md/dm-snap-transient.o drivers/md/dm-snap-persistent.o 

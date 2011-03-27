@@ -1,0 +1,1 @@
+cmd_drivers/onedram_svn/victory/onedram/onedram.ko := /home/thomas/test/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL -r  -T /home/thomas/work/tanimn/Twilight_Zone_Kernel/Kernel/scripts/module-common.lds --build-id -o drivers/onedram_svn/victory/onedram/onedram.ko drivers/onedram_svn/victory/onedram/onedram.o drivers/onedram_svn/victory/onedram/onedram.mod.o

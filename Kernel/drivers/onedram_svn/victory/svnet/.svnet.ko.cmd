@@ -1,0 +1,1 @@
+cmd_drivers/onedram_svn/victory/svnet/svnet.ko := /home/thomas/test/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL -r  -T /home/thomas/work/tanimn/Twilight_Zone_Kernel/Kernel/scripts/module-common.lds --build-id -o drivers/onedram_svn/victory/svnet/svnet.ko drivers/onedram_svn/victory/svnet/svnet.o drivers/onedram_svn/victory/svnet/svnet.mod.o

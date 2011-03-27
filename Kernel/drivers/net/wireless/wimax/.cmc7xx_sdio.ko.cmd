@@ -1,0 +1,1 @@
+cmd_drivers/net/wireless/wimax/cmc7xx_sdio.ko := /home/thomas/test/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL -r  -T /home/thomas/work/tanimn/Twilight_Zone_Kernel/Kernel/scripts/module-common.lds --build-id -o drivers/net/wireless/wimax/cmc7xx_sdio.ko drivers/net/wireless/wimax/cmc7xx_sdio.o drivers/net/wireless/wimax/cmc7xx_sdio.mod.o
