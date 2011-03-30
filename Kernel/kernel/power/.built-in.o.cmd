@@ -1,1 +1,0 @@
-cmd_kernel/power/built-in.o :=  /home/thomas/test/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL    -r -o kernel/power/built-in.o kernel/power/main.o kernel/power/console.o kernel/power/process.o kernel/power/suspend.o kernel/power/wakelock.o kernel/power/portlist.o kernel/power/userwakelock.o kernel/power/earlysuspend.o kernel/power/consoleearlysuspend.o 

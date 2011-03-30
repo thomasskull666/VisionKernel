@@ -1,1 +1,0 @@
-cmd_drivers/scsi/scsi_wait_scan.ko := /home/thomas/test/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL -r  -T /home/thomas/work/tanimn/Twilight_Zone_Kernel/Kernel/scripts/module-common.lds --build-id -o drivers/scsi/scsi_wait_scan.ko drivers/scsi/scsi_wait_scan.o drivers/scsi/scsi_wait_scan.mod.o

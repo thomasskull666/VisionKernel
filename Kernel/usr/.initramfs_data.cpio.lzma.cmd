@@ -1,1 +1,0 @@
-cmd_usr/initramfs_data.cpio.lzma := /bin/bash /home/thomas/work/tanimn/Twilight_Zone_Kernel/Kernel/scripts/gen_initramfs_list.sh -o usr/initramfs_data.cpio.lzma  -u "squash"  -g "squash"  /home/thomas/work/initramfs/

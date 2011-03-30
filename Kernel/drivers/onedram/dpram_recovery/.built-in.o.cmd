@@ -1,1 +1,0 @@
-cmd_drivers/onedram/dpram_recovery/built-in.o :=  rm -f drivers/onedram/dpram_recovery/built-in.o; /home/thomas/test/arm-2009q3/bin/arm-none-linux-gnueabi-ar rcs drivers/onedram/dpram_recovery/built-in.o

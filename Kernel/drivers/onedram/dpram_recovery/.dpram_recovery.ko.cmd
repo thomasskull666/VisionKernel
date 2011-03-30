@@ -1,1 +1,0 @@
-cmd_drivers/onedram/dpram_recovery/dpram_recovery.ko := /home/thomas/test/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL -r  -T /home/thomas/work/tanimn/Twilight_Zone_Kernel/Kernel/scripts/module-common.lds --build-id -o drivers/onedram/dpram_recovery/dpram_recovery.ko drivers/onedram/dpram_recovery/dpram_recovery.o drivers/onedram/dpram_recovery/dpram_recovery.mod.o

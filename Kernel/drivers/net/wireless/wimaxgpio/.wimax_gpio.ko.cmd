@@ -1,1 +1,0 @@
-cmd_drivers/net/wireless/wimaxgpio/wimax_gpio.ko := /home/thomas/test/arm-2009q3/bin/arm-none-linux-gnueabi-ld -EL -r  -T /home/thomas/work/tanimn/Twilight_Zone_Kernel/Kernel/scripts/module-common.lds --build-id -o drivers/net/wireless/wimaxgpio/wimax_gpio.ko drivers/net/wireless/wimaxgpio/wimax_gpio.o drivers/net/wireless/wimaxgpio/wimax_gpio.mod.o
