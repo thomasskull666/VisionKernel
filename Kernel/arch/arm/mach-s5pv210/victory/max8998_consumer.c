@@ -183,12 +183,14 @@ static int set_max8998(unsigned int pwr, enum perf_level p_lv)
 	if(pwr == PMIC_ARM) {
 		voltage = frequency_match_tab[p_lv][pwr + 1];
 
+
 		if(voltage == s_arm_voltage)
 			return ret;
 
 		pmic_val = voltage * 1000;
 
 		DBG("regulator_set_voltage =%d\n",voltage);
+
 		/*set Arm voltage*/
 		ret = regulator_set_voltage(Reg_Arm,pmic_val,pmic_val);
 	        if(ret != 0)
@@ -269,7 +271,7 @@ EXPORT_SYMBOL_GPL(set_pmic_gpio);
 
 int set_voltage(enum perf_level p_lv)
 {
-	DBG("%s : p_lv = %d\n", __FUNCTION__, p_lv);
+//	DBG("%s : p_lv = %d\n", __FUNCTION__, p_lv);
 	if(step_curr != p_lv)
 	{
 		/*Commenting gpio initialisation*/
