@@ -1,7 +1,7 @@
 /*
  * Automatically generated C config: don't edit
  * Linux kernel version: 2.6.32.9
- * Sun Mar 27 05:47:38 2011
+ * Thu Mar 31 19:17:23 2011
  */
 #define AUTOCONF_INCLUDED
 #define CONFIG_ONEDRAM_READ_FILE 1

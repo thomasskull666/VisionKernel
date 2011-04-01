@@ -47,6 +47,9 @@ static const u32 s5p_sysout_clk_tab_1GHZ[][4] = {
 	{1400* MHZ, 667 *MHZ, 1400 *MHZ, 166 *MHZ},
 	// APLL:1300,ARMCLK:1300,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	{1300* MHZ, 667 *MHZ, 1300 *MHZ, 166 *MHZ},
+	//
+APLL:1200,ARMCLK:1200,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
+	{1200* MHZ, 667 *MHZ, 1200 *MHZ, 166 *MHZ},
 	// APLL:1000,ARMCLK:1000,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	{1000* MHZ, 667 *MHZ, 1000 *MHZ, 166 *MHZ},
 	// APLL:800,ARMCLK:800,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
@@ -69,9 +72,10 @@ static const u32 s5p_sysout_clk_tab_1GHZ[][4] = {
 static const u32 s5p_sys_clk_div0_tab_1GHZ[][DIV_TAB_MAX_FIELD] = {
         {0, 7, 7, 1, 3, 1, 4, 1, 3, 3, 0, 3}, // 1.4ghz
         {0, 6, 6, 1, 3, 1, 4, 1, 3, 3, 0, 3}, // 1.3ghz
+	{0, 5, 5, 1, 3, 1, 4, 1, 3, 3, 0, 3}, // 1.2ghz
         {0, 4, 4, 1, 3, 1, 4, 1, 3, 3, 0, 3}, // 1.0ghz
         {0, 3, 3, 1, 3, 1, 4, 1, 3, 3, 0, 3}, // 800mhz
-        {1, 3, 2, 1, 3, 1, 4, 1, 3, 3, 0, 3}, // 600mhz
+        {0, 2, 2, 1, 3, 1, 4, 1, 3, 3, 0, 3}, // 600mhz
         {1, 3, 1, 1, 3, 1, 4, 1, 3, 3, 0, 3}, // 400mhz
         {3, 3, 0, 1, 3, 1, 4, 1, 3, 3, 0, 3}, // 200mhz
         {7, 3, 0, 0, 7, 0, 9, 0, 3, 3, 1, 4}, // 100mhz
@@ -82,6 +86,7 @@ static const u32 s5p_sys_clk_div0_tab_1GHZ[][DIV_TAB_MAX_FIELD] = {
 static const u32 s5p_sys_clk_mps_tab_1GHZ[][6] = {
         {350, 6, 1, 667, 12, 1}, // 1.4ghz
         {325, 6, 1, 667, 12, 1}, // 1.3ghz
+	{300, 6, 1, 667, 12, 1}, // 1.2ghz
         {250, 6, 1, 667, 12, 1}, // 1.0ghz
         {100, 3, 1, 667, 12, 1}, // 800mhz
         {100, 3, 1, 667, 12, 1}, // 600mhz
@@ -139,97 +144,109 @@ struct S5PC110_clk_info clk_info[] = {
 	// APLL:1400,ARMCLK:1400,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	.armclk		=	1400* MHZ,
 	.apllout	=	1400* MHZ,
-	.apll_mps	=	((350<<16)|(6<<8)|1),
-	.msys_div0	=	(0|(6<<4)|(6<<8)|(1<<12)),
+	.apll_mps	=	0x15E0601, //((350<<16)|(6<<8)|1),
+	.msys_div0	=	0x1660, // (0|(6<<4)|(6<<8)|(1<<12)),
 	.mpllout	=	667* MHZ,
-	.mpll_mps	=	((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 =	((3<<16)|(1<<20)|(4<<24)|(1<<28)),
-	.div2val	=	((3<<0)|(3<<4)|(3<<8)),
-	.dmc0_div6 	=	(3<<28),
+	.mpll_mps	=	0x29B0C01, // ((667<<16)|(12<<8)|(1)),
+	.psys_dsys_div0 =	0x14130000, // ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
+	.div2val	=	0x333, // ((3<<0)|(3<<4)|(3<<8)),
+	.dmc0_div6 	=	0x30000000, // (3<<28),
 },
 {
 	// APLL:1300,ARMCLK:1300,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	.armclk		=	1300* MHZ,
 	.apllout	=	1300* MHZ,
-	.apll_mps	=	((325<<16)|(6<<8)|1),
-	.msys_div0	=	(0|(5<<4)|(5<<8)|(1<<12)),
+	.apll_mps	=	0x1450601, // ((325<<16)|(6<<8)|1),
+	.msys_div0	=	0x1660, // (0|(6<<4)|(6<<8)|(1<<12)),
 	.mpllout	=	667* MHZ,
-	.mpll_mps	=	((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 =	((3<<16)|(1<<20)|(4<<24)|(1<<28)),
-	.div2val	=	((3<<0)|(3<<4)|(3<<8)),
-	.dmc0_div6 	=	(3<<28),
+	.mpll_mps	=	0x29B0C01, // ((667<<16)|(12<<8)|(1)),
+	.psys_dsys_div0 =	0x14130000, // ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
+	.div2val	=	0x333, // ((3<<0)|(3<<4)|(3<<8)),
+	.dmc0_div6 	=	0x30000000, // (3<<28),
+},
+{
+	// APLL:1200,ARMCLK:1200,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
+	.armclk		=	1200* MHZ,
+	.apllout	=	1200* MHZ,
+	.apll_mps	=	0x12C0601, // ((300<<16)|(6<<8)|1),
+	.msys_div0	=	0x1550, // (0|(5<<4)|(5<<8)|(1<<12)),
+	.mpllout	=	667* MHZ,
+	.mpll_mps	=	0x29B0C01, // ((667<<16)|(12<<8)|(1)),
+	.psys_dsys_div0 =	0x14130000, // ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
+	.div2val	=	0x333, // ((3<<0)|(3<<4)|(3<<8)),
+	.dmc0_div6 	=	0x30000000, // (3<<28),
 },
 {
 	// APLL:1000,ARMCLK:1000,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	.armclk		=	1000* MHZ,
 	.apllout	=	1000* MHZ,
-	.apll_mps	=	((250<<16)|(6<<8)|1),
-	.msys_div0	=	(0|(4<<4)|(4<<8)|(1<<12)),
+	.apll_mps	=	0xFA0601, // ((250<<16)|(6<<8)|1),
+	.msys_div0	=	0x1440, // (0|(4<<4)|(4<<8)|(1<<12)),
 	.mpllout	=	667* MHZ,
-	.mpll_mps	=	((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 =	((3<<16)|(1<<20)|(4<<24)|(1<<28)),
-	.div2val	=	((3<<0)|(3<<4)|(3<<8)),
-	.dmc0_div6 	=	(3<<28),
+	.mpll_mps	=	0x29B0C01, // ((667<<16)|(12<<8)|(1)),
+	.psys_dsys_div0 =	0x14130000, // ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
+	.div2val	=	0x333, // ((3<<0)|(3<<4)|(3<<8)),
+	.dmc0_div6 	=	0x30000000, // (3<<28),
 },
 {
 	// APLL:800,ARMCLK:800,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	.armclk		=	800* MHZ,
 	.apllout	=	800* MHZ,
-	.apll_mps	=	((100<<16)|(3<<8)|1),
-	.msys_div0	=	(0|(3<<4)|(3<<8)|(1<<12)),
+	.apll_mps	=	0x640301, // ((100<<16)|(3<<8)|1),
+	.msys_div0	=	0x1330, // (0|(3<<4)|(3<<8)|(1<<12)),
 	.mpllout	=	667* MHZ,
-	.mpll_mps	=	((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 =	((3<<16)|(1<<20)|(4<<24)|(1<<28)),
-	.div2val	=	((3<<0)|(3<<4)|(3<<8)),
-	.dmc0_div6 	=	(3<<28),
+	.mpll_mps	=	0x29B0C01, // ((667<<16)|(12<<8)|(1)),
+	.psys_dsys_div0 =	0x14130000, // ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
+	.div2val	=	0x333, // ((3<<0)|(3<<4)|(3<<8)),
+	.dmc0_div6 	=	0x30000000, // (3<<28),
 },
 {
 	// APLL:800,ARMCLK:600,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	.armclk		=	600* MHZ,
 	.apllout	=	800* MHZ,
-	.apll_mps	=	((100<<16)|(3<<8)|1),
-	.msys_div0	=	(1|(3<<4)|(2<<8)|(1<<12)),
+	.apll_mps	=	0x640301, // ((100<<16)|(3<<8)|1),
+	.msys_div0	=	0x1221, // (1|(3<<4)|(2<<8)|(1<<12)),
 	.mpllout	=	667* MHZ,
-	.mpll_mps	=	((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 =	((3<<16)|(1<<20)|(4<<24)|(1<<28)),
-	.div2val	=	((3<<0)|(3<<4)|(3<<8)),
-	.dmc0_div6 	=	(3<<28),
+	.mpll_mps	=	0x29B0C01, // ((667<<16)|(12<<8)|(1)),
+	.psys_dsys_div0 =	0x14130000, // ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
+	.div2val	=	0x333, // ((3<<0)|(3<<4)|(3<<8)),
+	.dmc0_div6 	=	0x30000000, // (3<<28),
 },
 {
 	// APLL:800,ARMCLK:400,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	.armclk		=	400* MHZ,
 	.apllout	=	800* MHZ,
-	.apll_mps	=	((100<<16)|(3<<8)|1),
-	.msys_div0	=	(1|(3<<4)|(1<<8)|(1<<12)),
+	.apll_mps	=	0x640301, // ((100<<16)|(3<<8)|1),
+	.msys_div0	=	0x1131, // (1|(3<<4)|(1<<8)|(1<<12)),
 	.mpllout	=	667* MHZ,
-	.mpll_mps	=	((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 =	((3<<16)|(1<<20)|(4<<24)|(1<<28)),
-	.div2val	=	((3<<0)|(3<<4)|(3<<8)),
-	.dmc0_div6 	=	(3<<28),
+	.mpll_mps	=	0x29B0C01, // ((667<<16)|(12<<8)|(1)),
+	.psys_dsys_div0 =	0x14130000, // ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
+	.div2val	=	0x333, // ((3<<0)|(3<<4)|(3<<8)),
+	.dmc0_div6 	=	0x30000000, // (3<<28),
 },
 {
 	// APLL:800,ARMCLK:200,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	.armclk		=	200* MHZ,
 	.apllout	=	800* MHZ,
-	.apll_mps	=	((100<<16)|(3<<8)|1),
-	.msys_div0	=	(3|(3<<4)|(0<<8)|(1<<12)),
+	.apll_mps	=	0x640301, // ((100<<16)|(3<<8)|1),
+	.msys_div0	=	0x1033, // (3|(3<<4)|(0<<8)|(1<<12)),
 	.mpllout	=	667* MHZ,
-	.mpll_mps	=	((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 =	((3<<16)|(1<<20)|(4<<24)|(1<<28)),
-	.div2val	=	((3<<0)|(3<<4)|(3<<8)),
-	.dmc0_div6 	=	(3<<28),
+	.mpll_mps	=	0x29B0C01, // ((667<<16)|(12<<8)|(1)),
+	.psys_dsys_div0 =	0x14130000, // ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
+	.div2val	=	0x333, // ((3<<0)|(3<<4)|(3<<8)),
+	.dmc0_div6 	=	0x30000000, // (3<<28),
 },
 {
 	// APLL:800,ARMCLK:100,HCLK_MSYS:100,MPLL:667,HCLK_DSYS:83,HCLK_PSYS:66,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	.armclk		=	100* MHZ,
 	.apllout	=	800* MHZ,
-	.apll_mps	=	((100<<16)|(3<<8)|1),
-	.msys_div0	=	(7|(3<<4)|(0<<8)|(0<<12)),
+	.apll_mps	=	0x640301, // ((100<<16)|(3<<8)|1),
+	.msys_div0	=	0x37, // (7|(3<<4)|(0<<8)|(0<<12)),
 	.mpllout	=	667* MHZ,
-	.mpll_mps	=	((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 =	((7<<16)|(0<<20)|(9<<24)|(0<<28)),
-	.div2val	=	((3<<0)|(3<<4)|(3<<8)),
-	.dmc0_div6 	=	(7<<28),
+	.mpll_mps	=	0x29B0C01, // ((667<<16)|(12<<8)|(1)),
+	.psys_dsys_div0 =	0x9070000, // ((7<<16)|(0<<20)|(9<<24)|(0<<28)),
+	.div2val	=	0x333, // ((3<<0)|(3<<4)|(3<<8)),
+	.dmc0_div6 	=	0x70000000, // (7<<28),
 }
 };
 

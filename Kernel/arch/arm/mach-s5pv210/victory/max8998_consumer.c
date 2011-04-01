@@ -43,7 +43,7 @@
 #define PMIC_INT		1
 #define PMIC_BOTH		2
 
-#define DECREASE_DVFS_DELAY
+// #define DECREASE_DVFS_DELAY
 
 #ifdef DECREASE_DVFS_DELAY
 #define PMIC_SET_MASK   (0x38) //(0x7 << 3)
@@ -51,10 +51,12 @@
 #define PMIC_SET2_BIT   (0x10) //(0x1 << 4)
 #define PMIC_SET3_BIT   (0x20) //(0x1 << 5)
 #else
-#define PMIC_ARM_MASK		(0x3 << 3)
-#define PMIC_SET1_HIGH		(0x1 << 3)
-#define PMIC_SET2_HIGH		(0x1 << 4)
+#define PMIC_ARM_MASK		(0x18) // (0x3 << 3)
+#define PMIC_SET1_HIGH		(0x8) // (0x1 << 3)
+#define PMIC_SET2_HIGH		(0x10) // (0x1 << 4)
 #endif
+
+extern int exp_UV_mV[8];
 
 #ifndef CONFIG_CPU_FREQ
 unsigned int S5PC11X_FREQ_TAB = 1;
@@ -89,6 +91,7 @@ static const unsigned int frequency_match_1GHZ[][4] = {
 #if 1
         {1400000, 1375, 1125, 0},
         {1300000, 1350, 1125, 0},
+	{1200000, 1300, 1125, 0},
         {100000, 1200, 1125, 1},
         {800000, 1200, 1125, 2},
         {600000, 1100, 1125, 2},
@@ -132,6 +135,8 @@ static struct regulator *Reg_Arm = NULL, *Reg_Int = NULL;
 
 static unsigned int s_arm_voltage=0, s_int_voltage=0;
 
+unsigned long set1_gpio, set2_gpio, set3_gpio;
+
 #ifndef DECREASE_DVFS_DELAY
 /*only 4 Arm voltages and 2 internal voltages possible*/
 static const unsigned int dvs_volt_table_800MHZ[][3] = {
@@ -145,14 +150,15 @@ static const unsigned int dvs_volt_table_800MHZ[][3] = {
 };
 
 static const unsigned int dvs_volt_table_1GHZ[][3] = {
-        {L0, DVSARM1, DVSINT1}, // 1.3ghz
-        {L1, DVSARM1, DVSINT1}, // 1.2ghz
-        {L2, DVSARM2, DVSINT1}, // 1.0ghz
-        {L3, DVSARM2, DVSINT1}, // 800mhz
-        {L4, DVSARM3, DVSINT1}, // 600mhz
-        {L5, DVSARM3, DVSINT1}, // 400mhz
-        {L6, DVSARM4, DVSINT2}, // 200mhz
-        {L7, DVSARM4, DVSINT2}, // 100mhz
+        {L0, DVSARM1, DVSINT1}, // 1.4ghz
+        {L1, DVSARM1, DVSINT1}, // 1.3ghz
+	{L2, DVSARM1, DVSINT1}, // 1.2ghz
+        {L3, DVSARM2, DVSINT1}, // 1.0ghz
+        {L4, DVSARM2, DVSINT1}, // 800mhz
+        {L5, DVSARM3, DVSINT1}, // 600mhz
+        {L6, DVSARM3, DVSINT1}, // 400mhz
+        {L7, DVSARM4, DVSINT2}, // 200mhz
+        {L8, DVSARM4, DVSINT2}, // 100mhz
 };
 
 
@@ -189,7 +195,7 @@ static int set_max8998(unsigned int pwr, enum perf_level p_lv)
 
 		pmic_val = voltage * 1000;
 
-		DBG("regulator_set_voltage =%d\n",voltage);
+		DBG("regulator_set_voltage =%dmA @ %dMHz-%d UV=%d\n",voltage,frequency_match_tab[p_lv][pwr]/1000,p_lv,exp_UV_mV[p_lv]);
 
 		/*set Arm voltage*/
 		ret = regulator_set_voltage(Reg_Arm,pmic_val,pmic_val);
@@ -411,7 +417,7 @@ int set_voltage_dvs(enum perf_level p_lv)
 	set_gpio_dvs(p_lv);
 	udelay(delay);
 
-	DBG("[PWR] %s : level (%d -> %d), delay (%u)\n", __func__, step_curr, p_lv, delay);
+	DBG("[PWR] %s : level (%d -> %d), delay (%u)\n", __func__, frequency_match_tab[step_curr][0], frequency_match_tab[p_lv][0], delay);
 
 	step_curr = p_lv;
 

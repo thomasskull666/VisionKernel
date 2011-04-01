@@ -37,7 +37,7 @@
 
 #define ENABLE_DVFS_LOCK_HIGH 1
 #define USE_DVS
-#define GPIO_BASED_DVS
+// #define GPIO_BASED_DVS
 
 #define DBG(fmt...)
 //#define DBG(fmt...) printk(fmt)
@@ -82,12 +82,13 @@ extern int store_up_down_threshold(unsigned int down_threshold_value,
 static struct cpufreq_frequency_table s5pc110_freq_table_1GHZ[] = {
 	{L0, 1400*1000},
 	{L1, 1300*1000},
-	{L2, 1000*1000},
-	{L3, 800*1000},
-	{L4, 600*1000},
-	{L5, 400*1000},
-	{L6, 200*1000},
-	{L7, 100*1000},
+	{L2, 1200*1000},
+	{L3, 1000*1000},
+	{L4, 800*1000},
+	{L5, 600*1000},
+	{L6, 400*1000},
+	{L7, 200*1000},
+	{L8, 100*1000},
 	{0, CPUFREQ_TABLE_END},
 };
 
@@ -98,8 +99,9 @@ static unsigned char transition_state_1GHZ[][2] = {
         {3, 0},
         {4, 1},
         {5, 2},
+	{5, 3},
         {6, 3},
-        {7, 4},
+        {7, 3},
 };
 
 /* frequency */
@@ -137,6 +139,7 @@ static struct cpufreq_frequency_table *s5pc110_freq_table[] = {
 static unsigned int s5pc110_thres_table_1GHZ[][2] = {
       	{65, 90}, // 1.4ghz
       	{60, 80}, // 1.3ghz
+	{60, 80}, // 1.2ghz
       	{60, 80}, // 1.0ghz
         {50, 90}, // 800mhz
         {50, 90}, // 600mhz
@@ -171,6 +174,9 @@ static int get_dvfs_perf_level(enum freq_level_states freq_level, unsigned int *
 		break;
 	case LEV_1300MHZ:
 		freq = 1300 * 1000;
+		break;
+	case LEV_1200MHZ:
+		freq = 1200 * 1000;
 		break;
 	case LEV_1000MHZ:
 		freq = 1000 * 1000;
