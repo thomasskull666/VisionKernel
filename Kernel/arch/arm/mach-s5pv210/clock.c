@@ -42,14 +42,15 @@ extern unsigned int s5pc11x_cpufreq_index;
 #if 0
 /*APLL_FOUT, MPLL_FOUT, ARMCLK, HCLK_DSYS*/
 static const u32 s5p_sysout_clk_tab_1GHZ[][4] = {
-	 // APLL:1400,ARMCLK:1400,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
+	//
+APLL:1450,ARMCLK:1450,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
+	{1450* MHZ, 667 *MHZ, 1450 *MHZ, 166 *MHZ},	 
+	// APLL:1400,ARMCLK:1400,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	{1400* MHZ, 667 *MHZ, 1400 *MHZ, 166 *MHZ},
 	// APLL:1300,ARMCLK:1300,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	{1300* MHZ, 667 *MHZ, 1300 *MHZ, 166 *MHZ},
 	// APLL:1200,ARMCLK:1200,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	{1200* MHZ, 667 *MHZ, 1200 *MHZ, 166 *MHZ},
-	// APLL:1120,ARMCLK:1120,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
-	{1120* MHZ, 667 *MHZ, 1120 *MHZ, 166 *MHZ},
 	// APLL:1000,ARMCLK:1000,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	{1000* MHZ, 667 *MHZ, 1000 *MHZ, 166 *MHZ},
 	// APLL:800,ARMCLK:800,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
@@ -70,10 +71,10 @@ static const u32 s5p_sysout_clk_tab_1GHZ[][4] = {
 /*div0 ratio table*/
 /*apll, a2m, HCLK_MSYS, PCLK_MSYS, HCLK_DSYS, PCLK_DSYS, HCLK_PSYS, PCLK_PSYS, MFC_DIV, G3D_DIV, MSYS source(2D, 3D, MFC)(0->apll,1->mpll), DMC0 div*/
 static const u32 s5p_sys_clk_div0_tab_1GHZ[][DIV_TAB_MAX_FIELD] = {
-        {0, 7, 7, 1, 3, 1, 4, 1, 3, 3, 0, 3}, //1400
+      	{0, 8, 8, 1, 3, 1, 4, 1, 3, 3, 0, 3}, //1450
+	{0, 7, 7, 1, 3, 1, 4, 1, 3, 3, 0, 3}, //1400
         {0, 6, 6, 1, 3, 1, 4, 1, 3, 3, 0, 3}, //1300
 	{0, 5, 5, 1, 3, 1, 4, 1, 3, 3, 0, 3}, //1200
-        {0, 5, 5, 1, 3, 1, 4, 1, 3, 3, 0, 3}, //1120
         {0, 4, 4, 1, 3, 1, 4, 1, 3, 3, 0, 3}, //1000
         {0, 3, 3, 1, 3, 1, 4, 1, 3, 3, 0, 3}, //800
 	{1, 3, 2, 1, 3, 1, 4, 1, 3, 3, 0, 3}, //600
@@ -85,10 +86,10 @@ static const u32 s5p_sys_clk_div0_tab_1GHZ[][DIV_TAB_MAX_FIELD] = {
 /*pms value table*/
 /*APLL(m, p, s), MPLL(m, p, s)*/
 static const u32 s5p_sys_clk_mps_tab_1GHZ[][6] = {
-        {350, 6, 1, 667, 12, 1}, //1400
+        {360, 6, 1, 667, 12, 1}, //1450
+	{350, 6, 1, 667, 12, 1}, //1400
         {325, 6, 1, 667, 12, 1}, //1300
         {150, 3, 1, 667, 12, 1}, //1200
-        {150, 3, 1, 667, 12, 1}, //1120
         {125, 3, 1, 667, 12, 1}, //1000
         {100, 3, 1, 667, 12, 1}, //800
         {100, 3, 1, 667, 12, 1}, //600
@@ -163,6 +164,18 @@ PCLK_MSYS = HCLK_MSYS / (PCLK_MSYS_RATIO + 1)
 
 struct S5PC110_clk_info clk_info[] = {
 	{
+	// APLL:1450,ARMCLK:1450,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
+	.armclk = 1450* MHZ,
+	.apllout = 1450* MHZ,
+	.apll_mps = ((360<<16)|(6<<8)|1),
+	.msys_div0 = (0|(6<<4)|(6<<8)|(1<<12)),
+	.mpllout = 667* MHZ,
+	.mpll_mps = ((667<<16)|(12<<8)|(1)),
+	.psys_dsys_div0 = ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
+	.div2val = ((3<<0)|(3<<4)|(3<<8)),
+	.dmc0_div6 = (3<<28),
+	},	
+	{
 	// APLL:1400,ARMCLK:1400,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
 	.armclk = 1400* MHZ,
 	.apllout = 1400* MHZ,
@@ -191,18 +204,6 @@ struct S5PC110_clk_info clk_info[] = {
 	.armclk = 1200* MHZ,
 	.apllout = 1200* MHZ,
 	.apll_mps = ((300<<16)|(6<<8)|1),
-	.msys_div0 = (0|(6<<4)|(6<<8)|(1<<12)),
-	.mpllout = 667* MHZ,
-	.mpll_mps = ((667<<16)|(12<<8)|(1)),
-	.psys_dsys_div0 = ((3<<16)|(1<<20)|(4<<24)|(1<<28)),
-	.div2val = ((3<<0)|(3<<4)|(3<<8)),
-	.dmc0_div6 = (3<<28),
-	},
-	{
-	// APLL:1120,ARMCLK:1120,HCLK_MSYS:200,MPLL:667,HCLK_DSYS:166,HCLK_PSYS:133,PCLK_MSYS:100,PCLK_DSYS:83,PCLK_PSYS:66
-	.armclk = 1120* MHZ,
-	.apllout = 1120* MHZ,
-	.apll_mps = ((280<<16)|(6<<8)|1),
 	.msys_div0 = (0|(6<<4)|(6<<8)|(1<<12)),
 	.mpllout = 667* MHZ,
 	.mpll_mps = ((667<<16)|(12<<8)|(1)),
