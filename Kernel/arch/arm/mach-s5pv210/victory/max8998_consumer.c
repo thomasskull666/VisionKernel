@@ -704,6 +704,12 @@ EXPORT_SYMBOL(set_voltage_dvs);
 
 void max8998_init(void)
 {
+	max8998_ldo_set_voltage_direct(MAX8998_DCDC3, 1600000, 1600000);
+	max8998_ldo_enable_direct(MAX8998_DCDC3);
+
+	max8998_ldo_set_voltage_direct(MAX8998_LDO17, 2700000, 2700000);
+	max8998_ldo_enable_direct(MAX8998_LDO17);
+
 	if(S5PC11X_FREQ_TAB) // for 1.2GHZ table
 	{
 		step_curr = L0;
@@ -854,7 +860,7 @@ static int s3c_consumer_suspend(struct platform_device *dev, pm_message_t state)
 		}
 
 	//max8998_ldo_disable_direct(MAX8998_DCDC4);
-	//max8998_ldo_disable_direct(MAX8998_DCDC3);
+	//max8998_ldo_disable_direct(MAX8998_DCDC3);ld
 	max8998_ldo_disable_direct(MAX8998_DCDC2);
 	max8998_ldo_disable_direct(MAX8998_DCDC1);
 
