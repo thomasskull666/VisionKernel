@@ -860,7 +860,7 @@ static int s3c_consumer_suspend(struct platform_device *dev, pm_message_t state)
 		}
 
 	//max8998_ldo_disable_direct(MAX8998_DCDC4);
-	//max8998_ldo_disable_direct(MAX8998_DCDC3);ld
+	//max8998_ldo_disable_direct(MAX8998_DCDC3);
 	max8998_ldo_disable_direct(MAX8998_DCDC2);
 	max8998_ldo_disable_direct(MAX8998_DCDC1);
 
