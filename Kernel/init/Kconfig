@@ -334,8 +334,6 @@ config TREE_PREEMPT_RCU
 	  is also required.  It also scales down nicely to
 	  smaller systems.
 
-endchoice
-
 config TINY_RCU
 	bool "UP-only small-memory-footprint RCU"
 	depends on !SMP
@@ -344,6 +342,8 @@ config TINY_RCU
 	  designed for UP systems from which real-time response
 	  is not required.  This option greatly reduces the
 	  memory footprint of RCU.
+
+endchoice
 
 config RCU_TRACE
 	bool "Enable tracing for RCU"
