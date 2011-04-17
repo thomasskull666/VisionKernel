@@ -88,9 +88,9 @@ static const unsigned int frequency_match_1GHZ[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 #if 1
 	{1450000, 1400, 1125, 0}, //WARNING: out of spec voltage        
-	{1400000, 1375, 1125, 0}, //WARNING: out of spec voltage
-        {1300000, 1325, 1125, 1}, //WARNING: out of spec voltage
-        {1200000, 1300, 1125, 2},
+	{1400000, 1375, 1125, 1}, //WARNING: out of spec voltage
+        {1300000, 1325, 1125, 2}, //WARNING: out of spec voltage
+        {1200000, 1300, 1125, 3},
         {1000000, 1275, 1125, 4},
         {800000, 1200, 1125, 5},
         {600000, 1175, 1125, 6},
