@@ -144,7 +144,7 @@ EXPORT_SYMBOL(gp2a_get_lightsensor_status);
  *                 
  */
 
-static int buffering = 3; // Thanks Geniusdog254
+static int buffering = 2;
 
 extern int backlight_level;
 
