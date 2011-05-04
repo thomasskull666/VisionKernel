@@ -18,6 +18,11 @@ sync
 echo "1000000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 echo "1000000" > /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq
 
+# Enable BFQ I/O scheduler by default.
+
+rm /system/etc/init.d/20-scheduler
+cp ./20-scheduler /system/etc/init.d/20-scheduler
+
 # Enable init.d support
 
 if [ -d /system/etc/init.d ]
