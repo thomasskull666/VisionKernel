@@ -44,8 +44,9 @@
 #include <linux/seq_file.h>
 
 #define RCU_TREE_NONCORE
+#ifndef CONFIG_TINY_RCU
 #include "rcutree.h"
-
+#endif
 static void print_one_rcu_data(struct seq_file *m, struct rcu_data *rdp)
 {
 	if (!rdp->beenonline)
@@ -335,3 +336,4 @@ module_exit(rcuclassic_trace_cleanup);
 MODULE_AUTHOR("Paul E. McKenney");
 MODULE_DESCRIPTION("Read-Copy Update tracing for hierarchical implementation");
 MODULE_LICENSE("GPL");
+
