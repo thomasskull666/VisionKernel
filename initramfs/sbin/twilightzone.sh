@@ -31,6 +31,12 @@ then
 fi
 sync
 
+# keyboard patch sysfs call 7 for snappy keyboard performance
+if [ ! -f "/data/local/timer_delay" ]; then
+  echo 7 > /data/local/timer_delay
+fi
+cat /data/local/timer_delay > /sys/devices/platform/s3c-keypad/timer_delay
+
 # Fix screwy ownerships
 
 for blip in conf default.prop fota.rc init init.goldfish.rc init.rc init.smdkc110.rc lib lpm.rc modules recovery.rc res sbin
