@@ -202,7 +202,7 @@ int s5p_pmic_gating(unsigned int power_domain, unsigned int on_off)
 			max8998_ldo_disable_direct(MAX8998_LDO7);	
 			max8998_ldo_set_voltage_direct(MAX8998_LDO7,1800000, 1800000);
 			max8998_ldo_disable_direct(MAX8998_LDO17);
-			max8998_ldo_set_voltage_direct(MAX8998_LDO17,3000000,3000000);
+			max8998_ldo_set_voltage_direct(MAX8998_LDO17,2700000,2700000);
 		}
 		break;
 
