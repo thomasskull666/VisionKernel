@@ -23,6 +23,18 @@ echo "1000000" > /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq
 rm /system/etc/init.d/20-scheduler
 cp ./20-scheduler /system/etc/init.d/20-scheduler
 
+# Battery saving tweaks for running on battery (experimental).
+
+echo 0 > /proc/sys/vm/swappiness
+echo 0 > /proc/sys/vm/dirty_expire_centisecs
+echo 0 > /proc/sys/vm/dirty_writeback_centisecs
+echo 60 > /proc/sys/vm/dirty_background_ratio
+echo 95 > /proc/sys/vm/dirty_ratio
+
+# When memory is low, processes that caused the low memory will be killed first (experimental).
+
+sysctl -w vm.oom_kill_allocating_task=1
+
 # Enable init.d support
 
 if [ -d /system/etc/init.d ]

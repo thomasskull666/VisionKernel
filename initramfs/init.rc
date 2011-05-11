@@ -24,7 +24,7 @@ loglevel 3
     symlink /system/etc /etc
 
 # Stroke my ego
-        setprop ro.build.display.id "VisionKernel v1.2.1 - ACS"
+        setprop ro.build.display.id "VisionKernel v1.3c1 - ACS"
 
 # create mountpoints
     mkdir /mnt 0775 root system
