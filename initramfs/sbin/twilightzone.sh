@@ -9,6 +9,7 @@ busybox mount -o remount,rw /system
 
 # Install BusyBox 1.18
 
+/sbin/busybox mkdir /bin
 /sbin/busybox --install -s /system/bin
 # /sbin/busybox --install -s /sbin
 sync
@@ -81,7 +82,7 @@ fi
 
 if [ ! -f "/system/etc/resolv.conf" ]; then
 	echo "nameserver 8.8.8.8" >> /system/etc/resolv.conf
-	echo "nameserver 8.8.8.4" >> /system/etc/resolv.conf
+	echo "nameserver 8.8.4.4" >> /system/etc/resolv.conf
 fi 
 sync
 
