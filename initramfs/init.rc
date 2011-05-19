@@ -539,8 +539,8 @@ service playlogos1 /system/bin/playlogos1
 
 # Custom Script Configuration
 
+chmod 755 /sbin/twilightzone.sh
 service twilightzone /sbin/twilightzone.sh
-	echo "bfq" > /sys/block/mmcblk0/queue/scheduler
 	user root
 	oneshot
 
