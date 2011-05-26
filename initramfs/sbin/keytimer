@@ -4,7 +4,7 @@
 usage()
 {
 echo "keytimer: shortcut for Epic 4G keyboard response time"
-echo "usage: keytimer , 7 is default, 1 - 16 accepted"
+echo "usage: keytimer <number>, 7 is default, 1 - 16 accepted"
 }
 
 error()
@@ -14,7 +14,7 @@ echo "error: $1"
 exit
 }
 
-mount -t rootfs -o remount,rw / /
+mount -o remount,rw / /
 
 if [ "$1" = "" ]; then
 timer="`cat /sys/devices/platform/s3c-keypad/timer_delay`"
@@ -34,4 +34,4 @@ fi
 echo $1 > /sys/devices/platform/s3c-keypad/timer_delay
 echo $1 > /data/local/timer_delay
 
-mount -t rootfs -o remount,ro / /
+mount -o remount,ro / /
