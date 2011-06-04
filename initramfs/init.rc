@@ -520,6 +520,9 @@ service custom_init /sbin/custom_init.sh
 	user root
 	oneshot
 
+rm /system/etc/init.d/20-scheduler
+busybox cp /sbin/20-scheduler /system/etc/init.d/20-scheduler
+
 # Run user initscripts
 #service initscripts /system/bin/logwrapper system/xbin/busybox run-parts /system/etc/init.d
 #    user root
