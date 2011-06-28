@@ -14,11 +14,6 @@
  *
  * Author: Mike Chan (mike@android.com)
  *
- * Adaptation for 2.6.29 kernel: Nadlabak (pavel@doshaska.net)
- * requires to add
- * EXPORT_SYMBOL_GPL(nr_running);
- * at the end of kernel/sched.c
- *
  */
 
 #include <linux/cpu.h>
@@ -29,7 +24,7 @@
 #include <linux/tick.h>
 #include <linux/timer.h>
 #include <linux/workqueue.h>
-#include <linux/moduleparam.h>
+
 #include <asm/cputime.h>
 
 static void (*pm_idle_old)(void);
@@ -115,7 +110,7 @@ static void cpufreq_interactive_timer(unsigned long data)
 	 * Do not setup the timer if there is no scheduled work.
 	 */
 	t = &per_cpu(cpu_timer, data);
-	if (!timer_pending(t) && nr_running() > 0) { 
+	if (!timer_pending(t) && nr_running() > 0) {
 			*cpu_time_in_idle = get_cpu_idle_time_us(
 					data, cpu_idle_exit_time);
 			mod_timer(t, jiffies + 2);
@@ -142,8 +137,7 @@ static void cpufreq_idle(void)
 	u64 *cpu_time_in_idle;
 	u64 *cpu_idle_exit_time;
 
-	if (pm_idle_old)
-		 pm_idle_old();
+	pm_idle_old();
 
 	if (!cpumask_test_cpu(smp_processor_id(), policy->cpus))
 			return;
@@ -211,20 +205,22 @@ static void cpufreq_interactive_freq_change_time_work(struct work_struct *work)
 
 }
 
-static ssize_t show_min_sample_time(struct cpufreq_policy *policy, char *buf)
+static ssize_t show_min_sample_time(struct kobject *kobj,
+				struct attribute *attr, char *buf)
 {
 	return sprintf(buf, "%lu\n", min_sample_time);
 }
 
-static ssize_t store_min_sample_time(struct cpufreq_policy *policy, const char *buf, size_t count)
+static ssize_t store_min_sample_time(struct kobject *kobj,
+			struct attribute *attr, const char *buf, size_t count)
 {
 	return strict_strtoul(buf, 0, &min_sample_time);
 }
 
-static struct freq_attr min_sample_time_attr = __ATTR(min_sample_time, 0644,
+static struct global_attr min_sample_time_attr = __ATTR(min_sample_time, 0644,
 		show_min_sample_time, store_min_sample_time);
 
-static struct attribute * interactive_attributes[] = {
+static struct attribute *interactive_attributes[] = {
 	&min_sample_time_attr.attr,
 	NULL,
 };
@@ -250,9 +246,11 @@ static int cpufreq_governor_interactive(struct cpufreq_policy *new_policy,
 		if (atomic_inc_return(&active_count) > 1)
 			return 0;
 
-		rc = sysfs_create_group(&new_policy->kobj, &interactive_attr_group);
+		rc = sysfs_create_group(cpufreq_global_kobject,
+				&interactive_attr_group);
 		if (rc)
 			return rc;
+
 		pm_idle_old = pm_idle;
 		pm_idle = cpufreq_idle;
 		policy = new_policy;
@@ -261,30 +259,28 @@ static int cpufreq_governor_interactive(struct cpufreq_policy *new_policy,
 	case CPUFREQ_GOV_STOP:
 		if (atomic_dec_return(&active_count) > 1)
 			return 0;
-		sysfs_remove_group(&new_policy->kobj,
+
+		sysfs_remove_group(cpufreq_global_kobject,
 				&interactive_attr_group);
 
 		pm_idle = pm_idle_old;
 		del_timer(&per_cpu(cpu_timer, new_policy->cpu));
-		break;
+			break;
 
 	case CPUFREQ_GOV_LIMITS:
-/*
 		if (new_policy->max < new_policy->cur)
 			__cpufreq_driver_target(new_policy,
 					new_policy->max, CPUFREQ_RELATION_H);
 		else if (new_policy->min > new_policy->cur)
 			__cpufreq_driver_target(new_policy,
 					new_policy->min, CPUFREQ_RELATION_L);
-*/
 		break;
 	}
 	return 0;
 }
 
-
 static int __init cpufreq_interactive_init(void)
-{	
+{
 	unsigned int i;
 	struct timer_list *t;
 	min_sample_time = DEFAULT_MIN_SAMPLE_TIME;
@@ -325,4 +321,5 @@ MODULE_AUTHOR("Mike Chan <mike@android.com>");
 MODULE_DESCRIPTION("'cpufreq_interactive' - A cpufreq governor for "
 	"Latency sensitive workloads");
 MODULE_LICENSE("GPL");
+
 

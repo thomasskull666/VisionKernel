@@ -81,31 +81,27 @@ extern int store_up_down_threshold(unsigned int down_threshold_value,
 
 /* frequency */
 static struct cpufreq_frequency_table s5pc110_freq_table_1GHZ[] = {
-	{L0, 1450*1000},	
-	{L1, 1400*1000},
-	{L2, 1300*1000},
-	{L3, 1200*1000},
-	{L4, 1000*1000},
-	{L5, 800*1000},
-	{L6, 600*1000},
-	{L7, 400*1000},
-	{L8, 200*1000},
-	{L9, 100*1000},
+	{L0, 1400*1000},
+	{L1, 1200*1000},
+	{L2, 1000*1000},
+	{L3, 800*1000},
+	{L4, 600*1000},
+	{L5, 400*1000},
+	{L6, 200*1000},
+	{L7, 100*1000},
 	{0, CPUFREQ_TABLE_END},
 };
 
 /*Assigning different index for fast scaling up*/
 static unsigned char transition_state_1GHZ[][2] = {
-        {1, 5},//1450
-        {2, 5},//1400
-        {3, 5},//1300
-        {4, 5},//1200
-        {5, 5},//1000
-        {6, 5},//800
-        {7, 5},//600
-        {8, 6},//400
-        {9, 7},//200
-        {10, 8},//100
+        {1, 5},//1400
+        {2, 5},//1200
+        {3, 5},//1000
+        {4, 5},//800
+        {5, 5},//600
+        {6, 5},//400
+        {7, 6},//200
+        {8, 7},//100
 };
 
 /* frequency */
@@ -145,8 +141,6 @@ static unsigned int s5pc110_thres_table_1GHZ[][2] = {
         {55, 90},
         {55, 90},
         {55, 90},
-        {55, 90},
-        {55, 90},
         {60, 80},
         {60, 80},
         {60, 80},
@@ -174,14 +168,8 @@ static int get_dvfs_perf_level(enum freq_level_states freq_level, unsigned int *
 	struct cpufreq_frequency_table *freq_tab = s5pc110_freq_table[S5PC11X_FREQ_TAB];
 	switch(freq_level)
 	{
-      case LEV_1450MHZ:
-                freq = 1450 * 1000;
-                break;
         case LEV_1400MHZ:
                 freq = 1400 * 1000;
-                break;
-        case LEV_1300MHZ:
-                freq = 1300 * 1000;
                 break;
         case LEV_1200MHZ:
                 freq = 1200 * 1000;
@@ -877,3 +865,4 @@ static int __init s5pc110_cpufreq_init(void)
 
 //arch_initcall(s5pc110_cpufreq_init);
 module_init(s5pc110_cpufreq_init);
+

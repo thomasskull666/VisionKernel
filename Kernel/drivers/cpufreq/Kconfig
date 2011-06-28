@@ -108,9 +108,10 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	bool "interactive"
 	select CPU_FREQ_GOV_INTERACTIVE
 	help
-	  Use the 'interactive' governor as default. This gets full cpu 	  frequency scaling for workloads that are latency sensitive, 		  typically interactive workloads..
-
-
+	  Use the 'interactive' governor as default. This gets full cpu frequency
+	  scaling for workloads that are latency sensitive, typically interactive
+	  workloads..
+	
 config CPU_FREQ_DEFAULT_GOV_CONSERVATIVE
 	bool "conservative"
 	select CPU_FREQ_GOV_CONSERVATIVE
@@ -217,24 +218,12 @@ config CPU_FREQ_GOV_CONSERVATIVE
 
 	  If in doubt, say N.
 
-config CPU_FREQ_GOV_CONSERVATIVE_VICTORY
-        depends on CPU_FREQ_GOV_CONSERVATIVE
-        bool "select CPU_FREQ_GOV_CONSERVATIVE for victory"
-
-config CPU_FREQ_GOV_CONSERVATIVE_ATLAS
-        depends on CPU_FREQ_GOV_CONSERVATIVE
-        bool "select CPU_FREQ_GOV_CONSERVATIVE for atlas"
-
-config CPU_HUMMINGBIRD_MIN_FREQ	
-	int "Samsung S5PC11X (Hummingbird) Min Freq"
-	default 200000
+config CPU_FREQ_GOV_SMARTASS
+	tristate "'smartass' cpufreq governor"
+	depends on CPU_FREQ
 	help
- 	  The default minimum freq for Samsung S5PC11X (Hummingbird) SoCs
+	  'smartass' - a "smart" optimized governor for the hero!
 
-config CPU_HUMMINGBIRD_MAX_FREQ	
-	int "Samsung S5PC11X (Hummingbird) Max Freq"
-	default 1000000
-	help
- 	  The default maximum freq for Samsung S5PC11X (Hummingbird) SoCs
+	  If in doubt, say N.
 
 endif	# CPU_FREQ

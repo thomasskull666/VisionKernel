@@ -18,6 +18,14 @@ sync
 echo "1000000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 echo "1000000" > /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq
 
+# Modify read_ahead_kb as per brainmaster
+
+echo "2048" > /sys/devices/virtual/bdi/179:0/read_ahead_kb
+
+# Set the perfect timer for the hardware keyboard. Thanks theimpaler747.
+
+echo "1" > /sys/devices/platform/s3c-keypad/timer_delay
+
 # Enable init.d support
 
 if [ -d /system/etc/init.d ]
@@ -66,7 +74,7 @@ fi
 
 if [ ! -f "/system/etc/resolv.conf" ]; then
 	echo "nameserver 8.8.8.8" >> /system/etc/resolv.conf
-	echo "nameserver 8.8.8.4" >> /system/etc/resolv.conf
+	echo "nameserver 8.8.4.4" >> /system/etc/resolv.conf
 fi 
 sync
 

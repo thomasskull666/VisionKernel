@@ -87,16 +87,14 @@ enum PMIC_VOLTAGE {
 static const unsigned int frequency_match_1GHZ[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 #if 1
-	{1450000, 1400, 1125, 0}, //WARNING: out of spec voltage        
-	{1400000, 1375, 1125, 1}, //WARNING: out of spec voltage
-        {1300000, 1325, 1125, 2}, //WARNING: out of spec voltage
-        {1200000, 1300, 1125, 3},
-        {1000000, 1275, 1125, 4},
-        {800000, 1200, 1125, 5},
-        {600000, 1175, 1125, 6},
-        {400000, 1050, 1125, 7},
-        {200000, 950, 1000, 8},
-        {100000, 950, 1000, 9},
+        {1400000, 1375, 1125, 0}, //WARNING: out of spec voltage
+        {1200000, 1300, 1125, 1},
+        {1000000, 1275, 1125, 2},
+        {800000, 1200, 1125, 3},
+        {600000, 1175, 1125, 4},
+        {400000, 1050, 1125, 5},
+        {200000, 950, 1000, 6},
+        {100000, 950, 1000, 7},
 #else //just for dvs test
         {1000000, 1250, 1100, 0},
         {800000, 1250, 1100, 1},
@@ -108,9 +106,7 @@ static const unsigned int frequency_match_1GHZ[][4] = {
 
 unsigned int frequency_voltage_tab[][3] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
-	{1450000, 1400, 1125}, //WARNING: out of spec voltage for VDD_ARM       
-	{1400000, 1375, 1125}, //WARNING: out of spec voltage for VDD_ARM
-        {1300000, 1325, 1125}, //WARNING: out of spec voltage for VDD_ARM
+        {1400000, 1375, 1125}, //WARNING: out of spec voltage for VDD_ARM
         {1200000, 1300, 1125},
         {1000000, 1275, 1125},
         {800000, 1200, 1125},
@@ -184,16 +180,14 @@ static const unsigned int dvs_volt_table_1GHZ[][3] = {
 // {L0, DVSARM1, DVSINT1},
 // {L1, DVSARM1, DVSINT1},
 // {L2, DVSARM1, DVSINT1},
-       {L0, DVSARM1, DVSINT1}, //1450
-	{L1, DVSARM1, DVSINT1}, //1400
-       {L2, DVSARM1, DVSINT1}, //1300
-       {L3, DVSARM1, DVSINT1}, //1200
-       {L4, DVSARM1, DVSINT1}, //1000
-       {L5, DVSARM2, DVSINT1}, //800
-       {L6, DVSARM3, DVSINT1}, //600
-       {L7, DVSARM3, DVSINT1}, //400
-       {L8, DVSARM4, DVSINT2}, //200
-       {L9, DVSARM4, DVSINT2}, //100
+       {L0, DVSARM1, DVSINT1}, //1400
+       {L1, DVSARM1, DVSINT1}, //1200
+       {L2, DVSARM1, DVSINT1}, //1000
+       {L3, DVSARM2, DVSINT1}, //800
+       {L4, DVSARM3, DVSINT1}, //600
+       {L5, DVSARM3, DVSINT1}, //400
+       {L6, DVSARM4, DVSINT2}, //200
+       {L7, DVSARM4, DVSINT2}, //100
 };
 
 
@@ -203,7 +197,7 @@ const unsigned int (*dvs_volt_table[2])[3] = {
 };
 
 static const unsigned int dvs_arm_voltage_set[][2] = { //reassigned voltages for table above
-	{DVSARM1, 1400},
+	{DVSARM1, 1375},
 	{DVSARM2, 1200},
 	{DVSARM3, 1100},
 	{DVSARM4, 950},
@@ -212,7 +206,7 @@ static const unsigned int dvs_arm_voltage_set[][2] = { //reassigned voltages for
 };
 #endif
 
-extern unsigned int exp_UV_mV[10];
+extern unsigned int exp_UV_mV[8];
 
 //Controller Control Register (ConControl, R/W, Address = 0xF000_0000, 0xF140_0000)
 u32 readControllerControlRegister0(int param){
@@ -413,16 +407,15 @@ static int set_max8998(unsigned int pwr, enum perf_level p_lv)
                     max8998_set_dvsarm_direct(DVSARM1, voltage);
                     break;
                 case L5:
+		    max8998_set_dvsarm_direct(DVSARM2, voltage);
+                    break;
                 case L6:
-                    max8998_set_dvsarm_direct(DVSARM2, voltage);
+		    max8998_set_dvsarm_direct(DVSARM3, voltage);
                     break;
                 case L7:
-                    max8998_set_dvsarm_direct(DVSARM3, voltage);
+		    max8998_set_dvsarm_direct(DVSARM4, voltage);
                     break;
-                case L8:
-                case L9:
-                    max8998_set_dvsarm_direct(DVSARM4, voltage);
-                    break;
+               
                }
 
 
@@ -704,12 +697,6 @@ EXPORT_SYMBOL(set_voltage_dvs);
 
 void max8998_init(void)
 {
-	max8998_ldo_set_voltage_direct(MAX8998_DCDC3, 1600000, 1600000);
-	max8998_ldo_enable_direct(MAX8998_DCDC3);
-
-	max8998_ldo_set_voltage_direct(MAX8998_LDO17, 2700000, 2700000);
-	max8998_ldo_enable_direct(MAX8998_LDO17);
-
 	if(S5PC11X_FREQ_TAB) // for 1.2GHZ table
 	{
 		step_curr = L0;
@@ -935,3 +922,4 @@ MODULE_AUTHOR("Amit Daniel");
 MODULE_DESCRIPTION("MAX 8998 consumer driver");
 MODULE_LICENSE("GPL");
 MODULE_ALIAS("platform:max8998-consumer");
+

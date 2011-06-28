@@ -32,8 +32,8 @@
 #define dprintk(msg...) cpufreq_debug_printk(CPUFREQ_DEBUG_CORE, \
 						"cpufreq-core", msg)
 
-unsigned int exp_UV_mV[10] = {0,0,0,0,0,0,0,0,0,0}; //default undervolts {1400,1300,1200,1120,1000,800,600,400,200,100}
-int active_states[10] = {0,0,0,0,1,1,1,1,1,1}; //default enabled states {1400,1300,1200,1120,1000,800,600,400,200,100}
+unsigned int exp_UV_mV[8] = {0,0,0,0,0,0,0,0};
+int active_states[8] = {0,0,1,1,1,1,1,1};
 int exp_update_states=1;
 
 extern unsigned int frequency_voltage_tab[][3];
@@ -765,7 +765,7 @@ static ssize_t show_scaling_setspeed(struct cpufreq_policy *policy, char *buf)
 
 static ssize_t show_UV_mV_table(struct cpufreq_policy *policy, char *buf)
 {
-return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d\n", exp_UV_mV[0],exp_UV_mV[1],exp_UV_mV[2],exp_UV_mV[3],exp_UV_mV[4],exp_UV_mV[5],exp_UV_mV[6],exp_UV_mV[7],exp_UV_mV[8],exp_UV_mV[9]);
+return sprintf(buf, "%d %d %d %d %d %d %d %d\n", exp_UV_mV[0],exp_UV_mV[1],exp_UV_mV[2],exp_UV_mV[3],exp_UV_mV[4],exp_UV_mV[5],exp_UV_mV[6],exp_UV_mV[7]);
 // return -EINVAL;
 }
 
@@ -774,8 +774,7 @@ const char *buf, size_t count)
 {
 unsigned int ret = -EINVAL;
 
-//ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d", &exp_UV_mV[0],&exp_UV_mV[1],&exp_UV_mV[2],&exp_UV_mV[3],&exp_UV_mV[4],&exp_UV_mV[5],&exp_UV_mV[6],&exp_UV_mV[7],&exp_UV_mV[8],&exp_UV_mV[9]);
-ret = sscanf(buf, "%u %u %u %u %u %u %u %u %u %u", &exp_UV_mV[0],&exp_UV_mV[1],&exp_UV_mV[2],&exp_UV_mV[3],&exp_UV_mV[4],&exp_UV_mV[5],&exp_UV_mV[6],&exp_UV_mV[7],&exp_UV_mV[8],&exp_UV_mV[9]);
+ret = sscanf(buf, "%u %u %u %u %u %u %u %u", &exp_UV_mV[0],&exp_UV_mV[1],&exp_UV_mV[2],&exp_UV_mV[3],&exp_UV_mV[4],&exp_UV_mV[5],&exp_UV_mV[6],&exp_UV_mV[7]);
 if (ret != 1)
 return -EINVAL;
 else
@@ -856,7 +855,7 @@ return count;
 
 static ssize_t show_frequency_voltage_table(struct cpufreq_policy *policy, char *buf)
 {
-return sprintf(buf, "%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n",
+return sprintf(buf, "%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n%d %d %d\n",
 frequency_voltage_tab[0][0],frequency_voltage_tab[0][1],frequency_voltage_tab[0][2],
 frequency_voltage_tab[1][0],frequency_voltage_tab[1][1],frequency_voltage_tab[1][2],
 frequency_voltage_tab[2][0],frequency_voltage_tab[2][1],frequency_voltage_tab[2][2],
@@ -864,9 +863,7 @@ frequency_voltage_tab[3][0],frequency_voltage_tab[3][1],frequency_voltage_tab[3]
 frequency_voltage_tab[4][0],frequency_voltage_tab[4][1],frequency_voltage_tab[4][2],
 frequency_voltage_tab[5][0],frequency_voltage_tab[5][1],frequency_voltage_tab[5][2],
 frequency_voltage_tab[6][0],frequency_voltage_tab[6][1],frequency_voltage_tab[6][2],
-frequency_voltage_tab[7][0],frequency_voltage_tab[7][1],frequency_voltage_tab[7][2],
-frequency_voltage_tab[8][0],frequency_voltage_tab[8][1],frequency_voltage_tab[8][2],
-frequency_voltage_tab[9][0],frequency_voltage_tab[9][1],frequency_voltage_tab[9][2]
+frequency_voltage_tab[7][0],frequency_voltage_tab[7][1],frequency_voltage_tab[7][2]
 // frequency_voltage_tab[10][0],frequency_voltage_tab[10][1],frequency_voltage_tab[10][2],
 // frequency_voltage_tab[11][0],frequency_voltage_tab[11][1],frequency_voltage_tab[11][2],
 // frequency_voltage_tab[12][0],frequency_voltage_tab[12][1],frequency_voltage_tab[12][2]
@@ -875,7 +872,7 @@ frequency_voltage_tab[9][0],frequency_voltage_tab[9][1],frequency_voltage_tab[9]
 
 static ssize_t show_states_enabled_table(struct cpufreq_policy *policy, char *buf)
 {
-return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d\n", active_states[0],active_states[1],active_states[2],active_states[3],active_states[4],active_states[5],active_states[6],active_states[7],active_states[8],active_states[9]);
+return sprintf(buf, "%d %d %d %d %d %d %d %d\n", active_states[0],active_states[1],active_states[2],active_states[3],active_states[4],active_states[5],active_states[6],active_states[7]);
 // return sprintf(buf, "%d %d %d %d %d %d %d %d %d %d %d %d %d\n", active_states[0],active_states[1],active_states[2],active_states[3],active_states[4],active_states[5],active_states[6],active_states[7],active_states[8],active_states[9],active_states[10],active_states[11],active_states[12]);
 // return -EINVAL;
 }
@@ -885,7 +882,7 @@ const char *buf, size_t count)
 {
 unsigned int ret = -EINVAL;
 
-ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d", &active_states[0],&active_states[1],&active_states[2],&active_states[3],&active_states[4],&active_states[5],&active_states[6],&active_states[7],&active_states[8],&active_states[9]);
+ret = sscanf(buf, "%d %d %d %d %d %d %d %d", &active_states[0],&active_states[1],&active_states[2],&active_states[3],&active_states[4],&active_states[5],&active_states[6],&active_states[7]);
 // ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d %d %d", &active_states[0],&active_states[1],&active_states[2],&active_states[3],&active_states[4],&active_states[5],&active_states[6],&active_states[7],&active_states[8],&active_states[9],&active_states[10],&active_states[11],&active_states[12]);
 if (ret != 1)
 return -EINVAL;
@@ -2308,3 +2305,4 @@ static int __init cpufreq_core_init(void)
 	return 0;
 }
 core_initcall(cpufreq_core_init);
+
